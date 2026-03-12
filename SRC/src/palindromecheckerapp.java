@@ -1,42 +1,36 @@
-import java.util.LinkedList;
+import java.util.Scanner;
 
 public class palindromecheckerapp {
 
     /**
-     * Application entry point for UC8.
-     *
-     * @param args Command-line arguments
+     * Application entry point for UC9
      */
     public static void main(String[] args) {
 
-        // Define the input string
-        String input = "level";
+        Scanner sc = new Scanner(System.in);
 
-        // Create a LinkedList to store characters
-        LinkedList<Character> list = new LinkedList<>();
+        System.out.print("Input : ");
+        String input = sc.nextLine();
 
-        // Add each character to the linked list
-        for (char c : input.toCharArray()) {
-            list.add(c);
+        boolean result = check(input, 0, input.length() - 1);
+
+        System.out.println("Is Palindrome? : " + result);
+
+        sc.close();
+    }
+
+    private static boolean check(String s, int start, int end) {
+
+        // Base condition: if pointers cross
+        if (start >= end) {
+            return true;
         }
 
-        // Flag to track palindrome state
-        boolean isPalindrome = true;
-
-        // Compare until only one or zero elements remain
-        while (list.size() > 1) {
-
-            char first = list.removeFirst();
-            char last = list.removeLast();
-
-            if (first != last) {
-                isPalindrome = false;
-                break;
-            }
+        // If characters do not match
+        if (s.charAt(start) != s.charAt(end)) {
+            return false;
         }
-
-        // Display result
-        System.out.println("Input : " + input);
-        System.out.println("Is Palindrome? : " + isPalindrome);
+        // Recursive call
+        return check(s, start + 1, end - 1);
     }
 }
