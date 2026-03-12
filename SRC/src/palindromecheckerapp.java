@@ -3,30 +3,57 @@ import java.util.Scanner;
 public class palindromecheckerapp {
 
     /**
-     * Application entry point for UC10
+     * Application entry point for UC11.
+     * @param args Command-line arguments
      */
     public static void main(String[] args) {
 
-        Scanner sc = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
         System.out.print("Input : ");
-        String input = sc.nextLine();
+        String input = scanner.nextLine();
 
-        // Normalize string (remove spaces & symbols, convert to lowercase)
-        String normalized = input.replaceAll("[^a-zA-Z]", "").toLowerCase();
+        // Create service object
+        PalindromeService service = new PalindromeService();
 
-        boolean isPalindrome = true;
+        // Call palindrome check
+        boolean result = service.checkPalindrome(input);
 
-        // Compare characters from both ends
-        for (int i = 0; i < normalized.length() / 2; i++) {
-            if (normalized.charAt(i) != normalized.charAt(normalized.length() - 1 - i)) {
-                isPalindrome = false;
-                break;
-            }
-        }
+        System.out.println("Is Palindrome? : " + result);
 
-        System.out.println("Is Palindrome? : " + isPalindrome);
-
-        sc.close();
+        scanner.close();
     }
 }
+
+/**
+ * Service class that contains palindrome logic.
+ */
+class PalindromeService {
+
+    /**
+     * Checks whether the input string is a palindrome.
+     *
+     * @param input Input string
+     * @return true if palindrome, false otherwise
+     */
+    public boolean checkPalindrome(String input) {
+
+        // Initialize pointers
+        int start = 0;
+        int end = input.length() - 1;
+
+        // Compare characters moving inward
+        while (start < end) {
+
+            if (input.charAt(start) != input.charAt(end)) {
+                return false;
+            }
+
+            start++;
+            end--;
+        }
+
+        return true;
+    }
+}
+
